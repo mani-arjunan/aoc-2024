@@ -1004,13 +1004,7 @@ const input = `
 `;
 
 const findDistancesWithSimilarity = (input: string) => {
-  const [left, right] = getInput(input);
-  const rightCountMap = right.reduce((curr, acc) => {
-    const val = curr.get(acc);
-    curr.set(acc, val ? val + 1 : 1);
-
-    return curr;
-  }, new Map<number, number>());
+  const [left, right, rightCountMap] = getInput(input);
   let sum = 0;
 
   for (let i = 0; i < left.length; i++) {

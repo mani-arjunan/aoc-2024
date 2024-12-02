@@ -1001,20 +1001,34 @@ const input = `
 92147   87526
 `;
 
-export const getInput = (input: string): [number[], number[]] => {
-  const splitedInput = input.split("\n").filter((d) => d);
+export const getInput = (input: string): [number[], number[], Map<number, number>] => {
+  let temp = "";
+  let isLeft = true;
   const left = [] as number[];
   const right = [] as number[];
+  const rightMap = new Map<number, number>() 
 
-  for (let i = 0; i < splitedInput.length; i++) {
-    const [l, r] = splitedInput[i].split("  ");
-    left.push(+l);
-    right.push(+r);
+  for (let i = 0; i < input.length; i++) {
+    const data = input[i].trim();
+    if (data === "" && temp.length > 0) {
+      if (isLeft) {
+        left.push(+temp);
+      } else {
+        right.push(+temp);
+        const val = rightMap.get(+temp);
+
+        rightMap.set(+temp, val ? val + 1 : 1)
+      }
+      temp = "";
+    } else {
+      temp += data;
+      isLeft = !isLeft;
+    }
   }
   left.sort((a, b) => a - b);
   right.sort((a, b) => a - b);
 
-  return [left, right];
+  return [left, right, rightMap];
 };
 
 const findDistances = (input: string) => {
@@ -1024,6 +1038,8 @@ const findDistances = (input: string) => {
   for (let i = 0; i < left.length; i++) {
     sum += Math.abs(left[i] - right[i]);
   }
+
+  return sum
 };
 
-findDistances(input);
+console.log(findDistances(input))
