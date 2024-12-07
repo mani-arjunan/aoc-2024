@@ -70,7 +70,7 @@ const getCombinations = (totalNumOfOperators: number) => {
   return combinations
 }
 
-const totalCalibrationResults = (input: Array<Array<number | Array<number>>) => {
+const totalCalibrationResults = (input: Array<Array<number | Array<number>>>) => {
   let totalCalibration = BigInt(0)
 
   for (let i = 0; i < input.length; i++) {
